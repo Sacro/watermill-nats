@@ -1,9 +1,10 @@
 module github.com/ThreeDotsLabs/watermill-nats
 
 require (
-	github.com/ThreeDotsLabs/watermill v1.0.2
+	github.com/ThreeDotsLabs/watermill v1.1.1
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
+	github.com/lithammer/shortuuid/v3 v3.0.7 // indirect
 	github.com/nats-io/nats-streaming-server v0.15.1 // indirect
 	github.com/nats-io/stan.go v0.5.0
 	github.com/pkg/errors v0.8.1
