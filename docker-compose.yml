@@ -8,4 +8,4 @@ services:
     ports:
       - 4222:4222
     restart: unless-stopped
-    entrypoint: ["/nats-streaming-server", "--max_channels=0"]
+    entrypoint: ["/nats-streaming-server", "--max_channels=0", "-js"]
