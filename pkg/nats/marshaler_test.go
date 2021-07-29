@@ -2,6 +2,7 @@ package nats_test
 
 import (
 	"fmt"
+	"github.com/ThreeDotsLabs/watermill-jetstream/pkg/nats"
 	"sync"
 	"testing"
 
@@ -9,7 +10,6 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ThreeDotsLabs/watermill-nats/pkg/nats"
 	"github.com/nats-io/stan.go/pb"
 	"github.com/stretchr/testify/require"
 
