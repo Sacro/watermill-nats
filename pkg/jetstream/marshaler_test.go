@@ -2,30 +2,29 @@ package jetstream_test
 
 import (
 	"fmt"
+	"github.com/nats-io/nats.go"
 	"sync"
 	"testing"
 
-	stan "github.com/nats-io/stan.go"
-
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ThreeDotsLabs/watermill-nats/pkg/nats"
-	"github.com/nats-io/stan.go/pb"
 	"github.com/stretchr/testify/require"
 
 	"github.com/ThreeDotsLabs/watermill/message"
+
+	"github.com/ThreeDotsLabs/watermill-jetstream/pkg/jetstream"
 )
 
 func TestGobMarshaler(t *testing.T) {
 	msg := message.NewMessage("1", []byte("zag"))
 	msg.Metadata.Set("foo", "bar")
 
-	marshaler := nats.GobMarshaler{}
+	marshaler := jetstream.GobMarshaler{}
 
 	b, err := marshaler.Marshal("topic", msg)
 	require.NoError(t, err)
 
-	unmarshaledMsg, err := marshaler.Unmarshal(&stan.Msg{MsgProto: pb.MsgProto{Data: b}})
+	unmarshaledMsg, err := marshaler.Unmarshal(&nats.Msg{Data: b})
 	require.NoError(t, err)
 
 	assert.True(t, msg.Equals(unmarshaledMsg))
@@ -41,7 +40,7 @@ func TestGobMarshaler(t *testing.T) {
 }
 
 func TestGobMarshaler_multiple_messages_async(t *testing.T) {
-	marshaler := nats.GobMarshaler{}
+	marshaler := jetstream.GobMarshaler{}
 
 	messagesCount := 1000
 	wg := sync.WaitGroup{}
@@ -56,7 +55,8 @@ func TestGobMarshaler_multiple_messages_async(t *testing.T) {
 			b, err := marshaler.Marshal("topic", msg)
 			require.NoError(t, err)
 
-			unmarshaledMsg, err := marshaler.Unmarshal(&stan.Msg{MsgProto: pb.MsgProto{Data: b}})
+			unmarshaledMsg, err := marshaler.Unmarshal(&nats.Msg{Data: b})
+
 			require.NoError(t, err)
 
 			assert.True(t, msg.Equals(unmarshaledMsg))
